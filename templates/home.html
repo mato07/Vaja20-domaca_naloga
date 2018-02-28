@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Hilton GuestBook</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <h1>Hello, Stranger!</h1>
+    <form method="post" action="/rezultat">
+        <label for="ime_priimek"> Ime in Priimek: </label>
+        <input type="text" id="ime_priimek" name="imepriimek">
+        <br>
+        <label for="emajl"> Email: </label>
+        <input type="email" id="emajl" name="email">
+        <br>
+        <label for="sporocilce">Sporočilo: </label>
+        <input type="text" id="sporocilce" name="sporocilo">
+        <br>
+        <button type="submit">Oddaj sporočilo</button>
+    </form>
+    <a href="/seznam">Seznam sporočil</a>
+</body>
+</html>

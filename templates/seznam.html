@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filton Seznam</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    {% for vnos in seznam %}
+    <p>Ime in priimek: {{vnos.poimenovanje}}<br>
+    Email: {{vnos.posta}}<br>
+    Sporočilo: {{vnos.besedilo}}<br>
+    Čas nastanka: {{vnos.nastanek}}</p>
+    {% endfor %}
+    <a href="/">Začetna stran</a>
+</body>
+</html>
