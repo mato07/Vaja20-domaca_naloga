@@ -6,16 +6,15 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    {% for vnos in seznam %}
+    {% for vnos in kos_seznam %}
     <p>Ime in priimek: {{vnos.poimenovanje}}<br>
     Email: {{vnos.posta}}<br>
     Sporočilo: {{vnos.besedilo}}<br>
     Čas nastanka: {{vnos.nastanek}}<br>
     <a href="/sporocilo/{{vnos.key.id()}}">link</a></p>
-    <a href="/sporocilo/{{ vnos.key.id() }}/edit"><button>Uredi</button></a>
-    <a href="/sporocilo/{{ vnos.key.id() }}/delete"><button>Izbriši</button></a><br><br>
+            <a href="/sporocilo/{{ vnos.key.id() }}/renew"><button>Obnovi</button></a>
+    <a href="/sporocilo/{{ vnos.key.id() }}/destroy"><button>Trajno izbriši</button></a><br><br>
     {% endfor %}
-    <a href="/">Začetna stran</a><br>
-
+    <a href="/">Začetna stran</a>
 </body>
 </html>

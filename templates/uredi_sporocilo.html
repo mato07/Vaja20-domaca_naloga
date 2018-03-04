@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uredi</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <h1>Uredi sporocilo</h1>
+    <form method="post">
+        <label for="imenko">Ime in priimek: </label>
+        <input type="text" value="{{posamezno_sporocilce.poimenovanje}}" name="novo-poimenovanje" id="imenko"><br>
+        <label for="postica">Email: </label>
+        <input type="text" value="{{posamezno_sporocilce.posta}}" name="nova-posta" id="postica"><br>
+        <label for="besedilce">Sporočilo: </label>
+        <input type="text" value="{{posamezno_sporocilce.besedilo}}" name="novo-besedilo" id="besedilce"><br>
+        <p>Čas nastanka: {{posamezno_sporocilce.nastanek}}</p>
+        <p>ID sporočila: {{posamezno_sporocilce.key.id()}}</p>
+        <button type="submit">Shrani</button>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Obnovi</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+        <h3>Ali želite obnoviti izbrisano sporočilo?</h3>
+        <p>Ime in priimek: {{posamezno_sporocilce.poimenovanje}}<br>
+    Email: {{posamezno_sporocilce.posta}}<br>
+    Sporočilo: {{posamezno_sporocilce.besedilo}}<br>
+    Čas nastanka: {{posamezno_sporocilce.nastanek}}<br>
+        ID sporocila: {{posamezno_sporocilce.key.id()}}</p>
+    <form method="post">
+        <button type="submit">Da</button>
+    </form>
+        <a href="/kos"><button>Ne</button></a>
+</body>
+</html>

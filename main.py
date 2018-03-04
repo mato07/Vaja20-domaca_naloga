@@ -53,12 +53,86 @@ class RezultatHandler(BaseHandler):
 
 class ListHandler(BaseHandler):
     def get(self):
-        seznam = GuestBook.query().fetch()
+        seznam = GuestBook.query(GuestBook.izbris == False).fetch()
         podatki = {"seznam":seznam}
         return self.render_template("seznam.html",podatki)
+
+class PosameznoSporociloHandler(BaseHandler):
+    def get(self, vnos_id):
+        # Iz baze vzamemo sporocilo, katerega id je enak podanemu
+        sporocilce = GuestBook.get_by_id(int(vnos_id))
+
+        params = {"posamezno_sporocilce": sporocilce}
+        return self.render_template("posamezno_sporocilo.html", params=params)
+
+class UrediHandler(BaseHandler):
+    def get(self, vnos_id):
+        # Iz baze vzamemo sporocilo, katerega id je enak podanemu
+        sporocilce = GuestBook.get_by_id(int(vnos_id))
+
+        params = {"posamezno_sporocilce": sporocilce}
+        return self.render_template("uredi_sporocilo.html", params=params)
+
+    def post(self, vnos_id): # to metodo naredimo zaradi shrani gumba
+        sporocilce = GuestBook.get_by_id(int(vnos_id)) # potegnemo staro sporocilo iz baze
+        sporocilce.poimenovanje = self.request.get("novo-poimenovanje")
+        sporocilce.posta = self.request.get("nova-posta")
+        sporocilce.besedilo = self.request.get("novo-besedilo")
+        sporocilce.put()
+        return self.redirect_to("seznam-sporocil")
+
+class DeleteHandler(BaseHandler):
+    def get(self, vnos_id):
+        # Iz baze vzamemo sporocilo, katerega id je enak podanemu
+        sporocilce = GuestBook.get_by_id(int(vnos_id))
+        params = {"posamezno_sporocilce": sporocilce}
+        return self.render_template("izbrisi_sporocilo.html", params=params)
+
+    def post(self, vnos_id):
+        sporocilce = GuestBook.get_by_id(int(vnos_id))  # potegnemo staro sporocilo iz baze
+        sporocilce.izbris = True
+        sporocilce.put()
+        return self.redirect_to("seznam-sporocil")
+
+class KosHandler (BaseHandler):
+    def get(self):
+        kos_seznam = GuestBook.query(GuestBook.izbris == True).fetch()
+        podatki = {"kos_seznam":kos_seznam}
+        return self.render_template("kos_seznam.html",podatki)
+
+class EternalDeleteHandler (BaseHandler):
+    def get(self, vnos_id):
+        # Iz baze vzamemo sporocilo, katerega id je enak podanemu
+        sporocilce = GuestBook.get_by_id(int(vnos_id))
+        params = {"posamezno_sporocilce": sporocilce}
+        return self.render_template("unici_sporocilo.html", params=params)
+
+    def post(self, vnos_id):
+        sporocilce =  GuestBook.get_by_id(int(vnos_id))
+        sporocilce.key.delete()
+        return self.redirect_to("kos-sporocil")
+
+class ObnoviHandler (BaseHandler):
+    def get(self, vnos_id):
+        # Iz baze vzamemo sporocilo, katerega id je enak podanemu
+        sporocilce = GuestBook.get_by_id(int(vnos_id))
+        params = {"posamezno_sporocilce": sporocilce}
+        return self.render_template("obnovi_sporocilo.html", params=params)
+
+    def post(self, vnos_id):
+        sporocilce = GuestBook.get_by_id(int(vnos_id))  # potegnemo staro sporocilo iz baze
+        sporocilce.izbris = False
+        sporocilce.put()
+        return self.redirect_to("seznam-sporocil")
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/rezultat', RezultatHandler),
-    webapp2.Route('/seznam', ListHandler),
+    webapp2.Route('/seznam', ListHandler, name="seznam-sporocil"),
+    webapp2.Route('/sporocilo/<vnos_id:\d+>', PosameznoSporociloHandler),
+    webapp2.Route('/sporocilo/<vnos_id:\d+>/edit', UrediHandler),
+    webapp2.Route('/sporocilo/<vnos_id:\d+>/delete', DeleteHandler),
+    webapp2.Route('/kos', KosHandler, name="kos-sporocil"),
+    webapp2.Route('/sporocilo/<vnos_id:\d+>/destroy', EternalDeleteHandler),
+    webapp2.Route('/sporocilo/<vnos_id:\d+>/renew', ObnoviHandler),
 ], debug=True)

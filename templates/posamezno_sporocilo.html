@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Sporocilo</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <h1>Sporocilo</h1>
-
+        <p>Ime in priimek: {{posamezno_sporocilce.poimenovanje}}<br>
+    Email: {{posamezno_sporocilce.posta}}<br>
+    Sporočilo: {{posamezno_sporocilce.besedilo}}<br>
+    Čas nastanka: {{posamezno_sporocilce.nastanek}}<br>
+        ID sporocila: {{posamezno_sporocilce.key.id()}}</p>
+    {% if posamezno_sporocilce.izbris == False %}
+    <a href="/sporocilo/{{ posamezno_sporocilce.key.id() }}/edit"><button>Uredi</button></a>
+    <a href="/sporocilo/{{ posamezno_sporocilce.key.id() }}/delete"><button>Izbriši</button></a><br>
+    {% else %}
+    <a href="/sporocilo/{{ posamezno_sporocilce.key.id() }}/renew"><button>Obnovi</button></a>
+    <a href="/sporocilo/{{ posamezno_sporocilce.key.id() }}/destroy"><button>Trajno izbriši</button></a><br>
+    {% endif %}
+    <a href="/">Začetna stran</a> <br>
+    <a href="/seznam">Seznam sporočil</a>
 </body>
 </html>
